@@ -3,5 +3,5 @@
 "description": "SanchoNet Pool by Hephaestus Stake Pool",
 "ticker": "HEPHY",
 "homepage": "https://hephy.io",
-"extended": ""
+"extended": "https://raw.githubusercontent.com/hephy-io/sancho/main/extm"
 }
