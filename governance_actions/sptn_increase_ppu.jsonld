@@ -1,0 +1,104 @@
+{
+  "@context": {
+    "@language": "en",
+    "CIP100": "https://github.com/cardano-foundation/CIPs/blob/master/CIP-0100/README.md#",
+    "CIP108": "https://github.com/cardano-foundation/CIPs/blob/master/CIP-0108/README.md#",
+    "hashAlgorithm": "CIP100:hashAlgorithm",
+    "body": {
+      "@id": "CIP108:body",
+      "@context": {
+        "references": {
+          "@id": "CIP108:references",
+          "@container": "@set",
+          "@context": {
+            "GovernanceMetadata": "CIP100:GovernanceMetadataReference",
+            "Other": "CIP100:OtherReference",
+            "label": "CIP100:reference-label",
+            "uri": "CIP100:reference-uri",
+            "referenceHash": {
+              "@id": "CIP108:referenceHash",
+              "@context": {
+                "hashDigest": "CIP108:hashDigest",
+                "hashAlgorithm": "CIP100:hashAlgorithm"
+              }
+            }
+          }
+        },
+        "title": "CIP108:title",
+        "abstract": "CIP108:abstract",
+        "motivation": "CIP108:motivation",
+        "rationale": "CIP108:rationale"
+      }
+    },
+    "authors": {
+      "@id": "CIP100:authors",
+      "@container": "@set",
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "witness": {
+          "@id": "CIP100:witness",
+          "@context": {
+            "witnessAlgorithm": "CIP100:witnessAlgorithm",
+            "publicKey": "CIP100:publicKey",
+            "signature": "CIP100:signature"
+          }
+        }
+      }
+    }
+  },
+  "authors": [],
+  "hashAlgorithm": "blake2b-256",
+  "body": {
+    "abstract": "A proposal for a protocol parameter change to increase stakePoolTargetNum from 500 to 600.",
+    "motivation": "The protocol parameter stakePoolTargetNum, also known as K, has historically been a point of contention amongst the Cardano community. The last change in this parameter occurred on 6 December 2020 when it increased from 150 to 500. While much discussion has revolved around increasing this parameter to 1000, this proposal suggests a more conservative number of 600. This number would aim to bring pool saturation levels back to December 2020 levels, an inflation adjustment as it were. The hope is that a smaller change to the parameter, and in keeping with historical stake pool saturation levels, would be more amenable to all stakeholders and provide the opportunity to demonstrate a willingness to change this parameter while preventing any serious disruption to the ecosystem in the process.",
+    "rationale": "Stake pool saturation is determined by dividing the current circulating supply by stakePoolTargetNum. Currently 37,760,656,104 / 500 = 75,521,312 ada. When this parameter last changed in December 2020 the pool saturation limit came to around 64,000,000 ada, as the circulating supply has increased over the years since, so has the pool saturation limit. This means that a stake pool can now accommodate an extra 11.5 million ada in delegation compared to December 2020. This would mean that a multiple pool operator running 5 or more pools could accommodate a whole extra pool worth of delegation (at December 2020 levels) without having to increase expenditure or infrastructure to host an actual extra pool. This raises concerns regarding increased decentralisation over time, even more so since the arrival of Voltaire as the role of a stake pool operator has expanded to also include governance voting on certain action types including, no confidence, update committee, hard forks and info actions.\n\nAs of Epoch 553, an increase in stakePoolTargetNum to 600 would impact 97 pools that are currently above 63 million ada delegation. In contrast, the commonly discussed increase to 1000 would impact 213 pools currently above 37.8 million ada delegation. An increase of stakePoolTargetNum to 600 would facilitate a return to December 2020 levels of pool saturation limit, for which we have almost 4.5 years of data and experience, therefore additional modelling to support the proposal is considered less important as if it was a proposal taking the ecosystem into uncharted territory.\n\nWith that said, an assessment has been carried out into the number of pools and amount of staked ada likely to be impacted by an increase in stakePoolTargetNum. Stake pool data from epoch 553 was used in this process, acquired from cardano-db-sync. Analysis of parameter values between 500-1000 have been considered in order to place the proposal in the context of the much debated raising of the parameter to 1000. An increase that this proposal considers to be too much to do in one parameter increase, hence the preference for a more conservative raise to 600.\n\nThis proposal satisfies the stakePoolTargetNum Guardrails as defined by the Cardano Blockchain Ecosystem Constitution in Appendix I Section 2.4. SPTN-01, SPTN-02, SPTN-03, SPTN-04. A proposed value of 600 is above 250, below 2000, is not negative and is not 0.\n\nReversion plan:\nAll protocol parameter update proposals are mandated by the Cardano Blockchain Ecosystem Constitution to include a reversion plan. In this instance, it would be to revert the stakePoolTargetNum parameter back down to 500. However, as this proposal seeks to return stake pool saturation limits to historically experienced levels and potentially impacts only around 3.3% of pools and less than 2% of circulating supply, it is unlikely that this will be needed.",
+    "references": [
+      {
+        "@type": "Other",
+        "label": "SPTN Impact Assessment 1 (CSV)",
+        "uri": ""
+      },
+      {
+        "@type": "Other",
+        "label": "SPTN Impact Assessment 2 (PDF)",
+        "uri": ""
+      },
+      {
+        "@type": "Other",
+        "label": "Rewards Sharing Scheme for Stake Pools, June 2020",
+        "uri": "https://arxiv.org/ftp/arxiv/papers/1807/1807.11218.pdf"
+      },
+      {
+        "@type": "Other",
+        "label": "Advice for stakeholders by Aggleos Kiayias, November 2020",
+        "uri": "https://iohk.io/en/blog/posts/2020/11/13/the-general-perspective-on-staking-in-cardano"
+      },
+      {
+        "@type": "Other",
+        "label": "SPO Poll results on AdaStat, June 2023",
+        "uri": "https://adastat.net/polls/96861fe7da8d45ba5db95071ed3889ed1412929f33610636c072a4b5ab550211"
+      },
+      {
+        "@type": "Other",
+        "label": "IOHK blog on changing k and minFee",
+        "uri": "https://iohk.io/en/blog/posts/2022/10/27/staking-parameters-and-network-optimization-where-next-for-k-and-min-fee"
+      },
+      {
+        "@type": "Other",
+        "label": "Cardano Forum Parameter discussion from ECP",
+        "uri": "https://forum.cardano.org/t/pcp-k-parameter-earncoinpool/122701"
+      },
+      {
+        "@type": "Other",
+        "label": "ECP resubmission of K proposal on Cardano Forum",
+        "uri": "https://forum.cardano.org/t/pcp-k-parameter-earncoinpool/122701/98"
+      },
+      {
+        "@type": "Other",
+        "label": "Reddit article explaining the impacts of K from 150 to 500 in Nov 2020",
+        "uri": "https://www.reddit.com/r/cardano/comments/k0c8pz/cardano_parameter_change_what_you_should_know"
+      }
+    ],
+    "title": "Increase stakePoolTargetNum from 500 to 600"
+  }
+}
