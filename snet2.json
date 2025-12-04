@@ -1,7 +1,7 @@
 {
-"name": "HEPHY SanchoNet",
-"description": "SanchoNet Pool by Hephaestus Stake Pool",
-"ticker": "HEPHY",
+"name": "HEPHY SanchoNet 2",
+"description": "SanchoNet Pool 2 by Hephaestus Stake Pool",
+"ticker": "HEPH2",
 "homepage": "https://hephy.io",
 "extended": "https://raw.githubusercontent.com/hephy-io/sancho/main/extm.json"
 }
