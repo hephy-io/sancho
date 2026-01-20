@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This script takes a text file "governance.list" formatted as ID ROLE VOTE METADATA_FILE
+# Example: 12...34#0 drep yes rationale.jsonld
+
 # --- CONFIG ---
 DATE_STAMP=$(date +%d%m%y)
 TX_BODY="${DATE_STAMP}-tx.body"
