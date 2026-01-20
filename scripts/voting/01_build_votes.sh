@@ -3,11 +3,13 @@
 # --- CONFIG ---
 DATE_STAMP=$(date +%d%m%y)
 TX_BODY="${DATE_STAMP}-tx.body"
+NETWORK="--testnet-magic 4"
 PAYMENT_ADDR=$(cat /path/to/payment.addr)
 PAYMENT_VKEY=${PAYMENT_VKEY:-/path/to/payment.vkey}
 DREP_VKEY=${DREP_VKEY:-/path/to/drep.vkey}
 SPO_VKEY=${SPO_VKEY:-/path/to/spo.vkey}
 BASE_URL="https://url/to/metadata/files"
+
 
 DRY_RUN=false
 [[ "$1" == "--dry-run" ]] && DRY_RUN=true
@@ -15,7 +17,7 @@ DRY_RUN=false
 # 1. AUTO-FETCH "CLEAN" UTXO (ADA Only)
 if [ "$DRY_RUN" = false ]; then
     echo "Searching for a clean UTXO..."
-    UTXO=$(cardano-cli query utxo --address "$PAYMENT_ADDR" --testnet-magic 4 --out-file /dev/stdout | \
+    UTXO=$(cardano-cli query utxo --address "$PAYMENT_ADDR" $NETWORK --out-file /dev/stdout | \
     jq -r 'to_entries | map(select(.value.value | length == 1 and has("lovelace"))) | sort_by(.value.value.lovelace) | last | .key')
 
     if [ "$UTXO" == "null" ] || [ -z "$UTXO" ]; then
@@ -58,7 +60,7 @@ done < governance.list
 if [ "$DRY_RUN" = false ]; then
     WITNESS_COUNT=$(( 1 + HAS_DREP + HAS_SPO ))
     cardano-cli conway transaction build \
-        --testnet-magic 4 \
+        $NETWORK \
         --tx-in "$UTXO" \
         $VOTE_FILES_CMD \
         --change-address "$PAYMENT_ADDR" \
